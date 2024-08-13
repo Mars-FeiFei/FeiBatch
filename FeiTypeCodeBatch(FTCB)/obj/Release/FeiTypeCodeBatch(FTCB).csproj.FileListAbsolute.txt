@@ -1,0 +1,11 @@
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\bin\Release\FeiTypeCodeBatch(FTCB).exe.config
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\bin\Release\FeiTypeCodeBatch(FTCB).exe
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\bin\Release\FeiTypeCodeBatch(FTCB).pdb
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch(FTCB).csproj.AssemblyReference.cache
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch_FTCB_.Form1.resources
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch_FTCB_.Properties.Resources.resources
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch_FTCB_.TextShow.resources
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch(FTCB).csproj.GenerateResource.cache
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch(FTCB).csproj.CoreCompileInputs.cache
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch(FTCB).exe
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Release\FeiTypeCodeBatch(FTCB).pdb
