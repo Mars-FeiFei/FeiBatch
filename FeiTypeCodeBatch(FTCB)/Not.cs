@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Using
 {
+    /// <summary>
+    /// Not char
+    /// </summary>
     public class Not : BasicType
     {
         public Not()
