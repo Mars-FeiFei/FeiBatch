@@ -18,10 +18,9 @@ namespace Using
             {
                 return GetVarCore(value);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Form1 f = new Form1();
-                f.label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
                 return null;
             }
         }

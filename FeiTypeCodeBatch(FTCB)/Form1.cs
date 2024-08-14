@@ -15,7 +15,6 @@ namespace FeiTypeCodeBatch_FTCB_
         public Form1()
         {
             InitializeComponent();
-            label2.Visible = false;
         }
         
         void PS(string command)
@@ -60,165 +59,7 @@ namespace FeiTypeCodeBatch_FTCB_
                 ReplaceAllText(textBox1.Text);
                 foreach (var item in File.ReadLines("D:\\code.txt"))
                 {
-                    string itemStr = item;
-                    CustomMethodBuild cm = new CustomMethodBuild(item);
-                    if (item.ToLower() == "helper")
-                    {
-                        MessageBox.Show("Fei Batch Use:1.TypeName(varName)=value \r\n 2.Method ;arg1;arg2...... \r\n 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... \r\n 4.if((bool)varName){CustomMethodName} \r\n 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.) \r\n 6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)");
-                    }
-                    if (item.Contains("for"))
-                    {
-                        for (global::System.Int32 i = item.Split(':')[0].Split('-')[1].Split('=')[1].Split(';')[0].ToInt32(); i < item.Split(':')[0].Split('-')[1].Split('<')[1].ToInt32(); i++)
-                        {
-                            List<string> list = new List<string>() {$"Int32(i)={i}" };
-                            foreach(var codeI in item.Split(':')[1].Split('/'))
-                            {
-                                list.Add(codeI);
-                            }
-                            Run(list.ToArray());
-                        }
-                        continue;
-                    }
-                    if (item.Contains("if("))
-                    {
-                        foreach (var i in V.vn)
-                        {
-                            if (i == item.Split('(')[1].Split(')')[0])
-                            {
-                                if (V.v[i].ToBool())
-                                {
-                                    foreach (var s in V.cn)
-                                    {
-                                        if (item.Split('{')[1].Split('}')[0]==s)
-                                        {
-                                            cm.RunMethod(s);
-                                            continue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    if (item.ToUpperInvariant().Contains("CMDSTART-"))
-                    {
-                        if (File.Exists(item.Split('-')[1]) && (item.Split('-')[1].Contains(".bat") || item.Split('-')[1].Contains(".cmd")))
-                        {
-                           Process.Start(item.Split('-')[1]);
-                        }  
-                    }
-                    if (item.ToUpperInvariant().Contains("FBPMSTART-"))
-                    {
-                        Run(File.ReadAllLines(item.Split('-')[1]));
-                        continue;
-                    }
-                    if (item.ToUpper().Contains("CMD-"))
-                    {
-                        Cmd(item.Split('-')[1]);
-                        continue;
-                    }
-                    if (item.ToUpper().Contains("PS-"))
-                    {
-                        PS(item.Split('-')[1]);
-                        continue;
-                    }
-                    foreach (var func in V.MethodReturn)
-                    {
-                        if(item.Contains(func)){
-                            isTwo = true;
-                            Type type = Type.GetType($"Using.{func}", true, true);
-                            object instance = Activator.CreateInstance(type);
-                            var t = instance as BasicType;
-                            string[] a = item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1].Split(';').RemoveFirst();
-                            if (func != "ArrayVal" && func != "Count")
-                            {
-                                List<object> al = new List<object>(a);
-                                foreach (var i in al)
-                                {
-                                    if (V.v.ContainsKey(i.ToString()))
-                                    {
-                                        a[Array.IndexOf(a, i)] = V.v[i.ToString()].ToString();
-                                    }
-                                }
-                            }
-                            object obj = t.MethodReturn(a);
-                            itemStr = item.Replace(func+item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1],obj.ToString());
-                            try
-                            {
-                                V.v.Add(itemStr.Split('(')[1].Split(')')[0], obj);
-                            }
-                            catch (Exception ex)
-                            {
-                                label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
-
-                            }
-                            goto Judge;
-                        }
-                    }
-                    Judge:
-                    if (itemStr.Contains("method"))
-                    {
-                        label1.Text = "There is a better alternative to this keyword (fbpmStart).";
-                        cm = new CustomMethodBuild(itemStr);
-                        cm.CreateMethod();
-                    }
-                    if (itemStr.Contains("=") && !itemStr.Contains("method") && !isTwo)
-                    {
-                        varname = itemStr.Split('(')[1].Split(')')[0];
-                        Type type = Type.GetType($"Using.{itemStr.Split('(')[0]}", true, true);
-                        object instance = Activator.CreateInstance(type);
-                        var t = instance as BasicType;
-                        var vvv = t.GetVar(itemStr.Split('=')[1]);
-                        try
-                        {
-                            V.v.Add(itemStr.Split('(')[1].Split(')')[0], vvv);
-                            V.vn.Add(itemStr.Split('(')[1].Split(')')[0]);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString());
-                        }
-                    }
-                    if (!itemStr.Contains("method"))
-                    {
-                        foreach (string s in V.Methods)
-                        {
-                            if (itemStr.Contains(s))
-                            {
-                                Type type = Type.GetType("Using."+s, true, true);
-                                object instance = Activator.CreateInstance(type);
-                                var t = instance as BasicType;
-                                object[] a = (object[])itemStr.Split(';').RemoveFirst();
-                                if (s != "ArrayAss")
-                                {
-                                    List<object> al = new List<object>(a);
-                                    foreach (var i in al)
-                                    {
-                                        if (V.v.ContainsKey(i.ToString()))
-                                        {
-                                            a[Array.IndexOf(a, i)] = (object)V.v[i.ToString()].ToString();
-                                        }
-                                    }
-                                }
-                                t.Method(a);
-                            }
-                        }
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                label2.Text = "Error:"+ex.Source+":"+ex.ToString()+"Stack:"+ex.StackTrace;
-            }
-        }
-        public void Run(string[] code)
-        {
-            try
-            {
-                bool isTwo = false;
-                foreach (var item in code)
-                {
-                    string itemStr = item;
+                    itemStr = item;
                     CustomMethodBuild cm = new CustomMethodBuild(item);
                     if (item.ToLower() == "helper")
                     {
@@ -308,7 +149,6 @@ namespace FeiTypeCodeBatch_FTCB_
                             }
                             catch (Exception ex)
                             {
-                                label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
                                 V.v[itemStr.Split('(')[1].Split(')')[0]] = obj;
                             }
                             goto Judge;
@@ -317,7 +157,6 @@ namespace FeiTypeCodeBatch_FTCB_
                 Judge:
                     if (itemStr.Contains("method"))
                     {
-                        label1.Text = "There is a better alternative to this keyword (fbpmStart).";
                         cm = new CustomMethodBuild(itemStr);
                         cm.CreateMethod();
                     }
@@ -327,7 +166,17 @@ namespace FeiTypeCodeBatch_FTCB_
                         Type type = Type.GetType($"Using.{itemStr.Split('(')[0]}", true, true);
                         object instance = Activator.CreateInstance(type);
                         var t = instance as BasicType;
-                        var vvv = t.GetVar(itemStr.Split('=')[1]);
+                        object vvv = new object();
+                        if (itemStr.Split('=')[1] != "@input")
+                        {
+                            vvv = t.GetVar(itemStr.Split('=')[1]);
+                        }
+                        else
+                        {
+                            textBox2.Text = varname + ":";
+                            textBox2.KeyDown += TextBox2_KeyDown;
+
+                        }
                         try
                         {
                             V.v.Add(itemStr.Split('(')[1].Split(')')[0], vvv);
@@ -335,9 +184,176 @@ namespace FeiTypeCodeBatch_FTCB_
                         }
                         catch (Exception ex)
                         {
-                            label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
                             V.v[itemStr.Split('(')[1].Split(')')[0]] = vvv;
                         }
+                    }
+                    if (!itemStr.Contains("method"))
+                    {
+                        foreach (string s in V.Methods)
+                        {
+                            if (itemStr.Contains(s))
+                            {
+                                Type type = Type.GetType("Using." + s, true, true);
+                                object instance = Activator.CreateInstance(type);
+                                var t = instance as BasicType;
+                                object[] a = (object[])itemStr.Split(';').RemoveFirst();
+                                if (s != "ArrayAss")
+                                {
+                                    List<object> al = new List<object>(a);
+                                    foreach (var i in al)
+                                    {
+                                        if (V.v.ContainsKey(i.ToString()))
+                                        {
+                                            a[Array.IndexOf(a, i)] = (object)V.v[i.ToString()].ToString();
+                                        }
+                                    }
+                                }
+                                t.Method(a);
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+            }
+        }
+        string itemStr = "";
+        public void Run(string[] code)
+        {
+            try
+            {
+                bool isTwo = false;
+                foreach (var item in code)
+                {
+                    itemStr = item;
+                    CustomMethodBuild cm = new CustomMethodBuild(item);
+                    if (item.ToLower() == "helper")
+                    {
+                        MessageBox.Show("Fei Batch Use:1.TypeName(varName)=value \r\n 2.Method ;arg1;arg2...... \r\n 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... \r\n 4.if((bool)varName){CustomMethodName} \r\n 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.) \r\n 6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)");
+                    }
+                    if (item.Contains("for"))
+                    {
+                        for (global::System.Int32 i = item.Split(':')[0].Split('-')[1].Split('=')[1].Split(';')[0].ToInt32(); i < item.Split(':')[0].Split('-')[1].Split('<')[1].ToInt32(); i++)
+                        {
+                            List<string> list = new List<string>() { $"Int32(i)={i}" };
+                            foreach (var codeI in item.Split(':')[1].Split('/'))
+                            {
+                                list.Add(codeI);
+                            }
+                            Run(list.ToArray());
+                        }
+                        continue;
+                    }
+                    if (item.Contains("if("))
+                    {
+                        foreach (var i in V.vn)
+                        {
+                            if (i == item.Split('(')[1].Split(')')[0])
+                            {
+                                if (V.v[i].ToBool())
+                                {
+                                    foreach (var s in V.cn)
+                                    {
+                                        if (item.Split('{')[1].Split('}')[0] == s)
+                                        {
+                                            cm.RunMethod(s);
+                                            continue;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    if (item.ToUpperInvariant().Contains("CMDSTART-"))
+                    {
+                        if (File.Exists(item.Split('-')[1]) && (item.Split('-')[1].Contains(".bat") || item.Split('-')[1].Contains(".cmd")))
+                        {
+                            Process.Start(item.Split('-')[1]);
+                        }
+                    }
+                    if (item.ToUpperInvariant().Contains("FBPMSTART-"))
+                    {
+                        Run(File.ReadAllLines(item.Split('-')[1]));
+                        continue;
+                    }
+                    if (item.ToUpper().Contains("CMD-"))
+                    {
+                        Cmd(item.Split('-')[1]);
+                        continue;
+                    }
+                    if (item.ToUpper().Contains("PS-"))
+                    {
+                        PS(item.Split('-')[1]);
+                        continue;
+                    }
+                    foreach (var func in V.MethodReturn)
+                    {
+                        if (item.Contains(func))
+                        {
+                            isTwo = true;
+                            Type type = Type.GetType($"Using.{func}", true, true);
+                            object instance = Activator.CreateInstance(type);
+                            var t = instance as BasicType;
+                            string[] a = item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1].Split(';').RemoveFirst();
+                            if (func != "ArrayVal" && func != "Count")
+                            {
+                                List<object> al = new List<object>(a);
+                                foreach (var i in al)
+                                {
+                                    if (V.v.ContainsKey(i.ToString()))
+                                    {
+                                        a[Array.IndexOf(a, i)] = V.v[i.ToString()].ToString();
+                                    }
+                                }
+                            }
+                            object obj = t.MethodReturn(a);
+                            itemStr = item.Replace(func + item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1], obj.ToString());
+                            try
+                            {
+                                V.v.Add(itemStr.Split('(')[1].Split(')')[0], obj);
+                            }
+                            catch (Exception ex)
+                            {
+                                V.v[itemStr.Split('(')[1].Split(')')[0]] = obj;
+                            }
+                            goto Judge;
+                        }
+                    }
+                Judge:
+                    if (itemStr.Contains("method"))
+                    {
+                        cm = new CustomMethodBuild(itemStr);
+                        cm.CreateMethod();
+                    }
+                    if (itemStr.Contains("=") && !itemStr.Contains("method") && !isTwo)
+                    {
+                        varname = itemStr.Split('(')[1].Split(')')[0];
+                        Type type = Type.GetType($"Using.{itemStr.Split('(')[0]}", true, true);
+                        object instance = Activator.CreateInstance(type);
+                        var t = instance as BasicType;
+                        object vvv = new object(); 
+                        if (itemStr.Split('=')[1] != "@input")
+                        {
+                            vvv = t.GetVar(itemStr.Split('=')[1]);
+                            try
+                            {
+                                V.v.Add(itemStr.Split('(')[1].Split(')')[0], vvv);
+                                V.vn.Add(itemStr.Split('(')[1].Split(')')[0]);
+                            }
+                            catch (Exception ex)
+                            {
+                                V.v[itemStr.Split('(')[1].Split(')')[0]] = vvv;
+                            }
+                        }
+                        else
+                        {
+                            textBox2.Text = varname+":";
+                            textBox2.KeyDown += TextBox2_KeyDown;
+                            
+                        }
+                        
                     }
                     if (!itemStr.Contains("method"))
                     {
@@ -369,7 +385,31 @@ namespace FeiTypeCodeBatch_FTCB_
             }
             catch (Exception ex)
             {
-                label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
+            }
+        }
+
+        private void TextBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AssVar(textBox2.Text,ref itemStr);
+            }
+        }
+        void AssVar(string text,ref string itemStr)
+        {
+            itemStr = itemStr.Replace(itemStr.Split('=')[1], text.Split(':')[1]);
+            AddVar(itemStr.Split('=')[1]);
+        }
+        void AddVar(object val)
+        {
+            try
+            {
+                V.v.Add(itemStr.Split('(')[1].Split(')')[0], val);
+                V.vn.Add(itemStr.Split('(')[1].Split(')')[0]);
+            }
+            catch (Exception)
+            {
+                V.v[itemStr.Split('(')[1].Split(')')[0]] = val;
             }
         }
         /// <summary>
