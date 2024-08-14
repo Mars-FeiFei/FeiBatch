@@ -1,0 +1,1 @@
+Fei Batch Use:1.TypeName(varName)=value 2.Method ;arg1;arg2...... 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... 4.if((bool)varName){CustomMethodName} 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.)6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)
