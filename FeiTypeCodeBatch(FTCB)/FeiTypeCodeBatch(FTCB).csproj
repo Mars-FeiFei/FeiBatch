@@ -51,6 +51,7 @@
     <Compile Include="ArrayAss.cs" />
     <Compile Include="ArrayVal.cs" />
     <Compile Include="Bool.cs" />
+    <Compile Include="Count.cs" />
     <Compile Include="Equals.cs" />
     <Compile Include="Gtr.cs" />
     <Compile Include="Lss.cs" />

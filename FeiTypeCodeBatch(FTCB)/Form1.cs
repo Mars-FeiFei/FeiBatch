@@ -62,6 +62,10 @@ namespace FeiTypeCodeBatch_FTCB_
                 {
                     string itemStr = item;
                     CustomMethodBuild cm = new CustomMethodBuild(item);
+                    if (item.ToLower() == "helper")
+                    {
+                        MessageBox.Show("Fei Batch Use:1.TypeName(varName)=value \r\n 2.Method ;arg1;arg2...... \r\n 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... \r\n 4.if((bool)varName){CustomMethodName} \r\n 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.) \r\n 6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)");
+                    }
                     if (item.Contains("for"))
                     {
                         for (global::System.Int32 i = item.Split(':')[0].Split('-')[1].Split('=')[1].Split(';')[0].ToInt32(); i < item.Split(':')[0].Split('-')[1].Split('<')[1].ToInt32(); i++)
@@ -126,7 +130,7 @@ namespace FeiTypeCodeBatch_FTCB_
                             object instance = Activator.CreateInstance(type);
                             var t = instance as BasicType;
                             string[] a = item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1].Split(';').RemoveFirst();
-                            if (func != "ArrayVal")
+                            if (func != "ArrayVal" && func != "Count")
                             {
                                 List<object> al = new List<object>(a);
                                 foreach (var i in al)
@@ -216,6 +220,10 @@ namespace FeiTypeCodeBatch_FTCB_
                 {
                     string itemStr = item;
                     CustomMethodBuild cm = new CustomMethodBuild(item);
+                    if (item.ToLower() == "helper")
+                    {
+                        MessageBox.Show("Fei Batch Use:1.TypeName(varName)=value \r\n 2.Method ;arg1;arg2...... \r\n 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... \r\n 4.if((bool)varName){CustomMethodName} \r\n 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.) \r\n 6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)");
+                    }
                     if (item.Contains("for"))
                     {
                         for (global::System.Int32 i = item.Split(':')[0].Split('-')[1].Split('=')[1].Split(';')[0].ToInt32(); i < item.Split(':')[0].Split('-')[1].Split('<')[1].ToInt32(); i++)
@@ -281,7 +289,7 @@ namespace FeiTypeCodeBatch_FTCB_
                             object instance = Activator.CreateInstance(type);
                             var t = instance as BasicType;
                             string[] a = item.Split(func.ToCharArray()[func.ToCharArray().Length - 1])[1].Split(';').RemoveFirst();
-                            if (func != "ArrayVal")
+                            if (func != "ArrayVal" && func != "Count")
                             {
                                 List<object> al = new List<object>(a);
                                 foreach (var i in al)
@@ -364,6 +372,10 @@ namespace FeiTypeCodeBatch_FTCB_
                 label2.Text = "Error:" + ex.Source + ":" + ex.ToString() + "Stack:" + ex.StackTrace;
             }
         }
+        /// <summary>
+        /// Write all text.
+        /// </summary>
+        /// <param name="text"></param>
         public void ReplaceAllText(string text)
         {
             using (StreamWriter s = new StreamWriter("D:\\code.txt", false, Encoding.UTF8))
@@ -371,7 +383,11 @@ namespace FeiTypeCodeBatch_FTCB_
                 s.Write(text);
             }
         }
-
+        /// <summary>
+        /// Save as .bat file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             SaveFileDialog openFileDialog = new SaveFileDialog();
@@ -385,7 +401,11 @@ namespace FeiTypeCodeBatch_FTCB_
                 }
             }
         }
-
+        /// <summary>
+        /// Save as the .cmd file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveCmd_Click(object sender, EventArgs e)
         {
             SaveFileDialog openFileDialog = new SaveFileDialog();
@@ -399,7 +419,11 @@ namespace FeiTypeCodeBatch_FTCB_
                 }
             }
         }
-
+        /// <summary>
+        /// Save as the .fbpm file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveFb_Click(object sender, EventArgs e)
         {
             SaveFileDialog openFileDialog = new SaveFileDialog();
@@ -419,6 +443,11 @@ namespace FeiTypeCodeBatch_FTCB_
 
     public static class U
     {
+        /// <summary>
+        /// Remove the first item in the string[].
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string[] RemoveFirst(this string[] str)
         {
             string[] result = new string[str.Length - 1];
@@ -433,6 +462,13 @@ namespace FeiTypeCodeBatch_FTCB_
             }
             return result;
         }
+        /// <summary>
+        /// Use Linq to Replace(Has some bug, please don't use this method.)
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="o"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static string NewReplace(this string s, string o, string n)
         {
             return string.Concat(s.Split(o.ToCharArray()).Select(a => a == "" ? n : a));
@@ -441,13 +477,22 @@ namespace FeiTypeCodeBatch_FTCB_
 
     public class V
     {
+        /// <summary>
+        /// Varname and Var value. 
+        /// </summary>
         public static Dictionary<string, object> v = new Dictionary<string, object>();
+        /// <summary>
+        /// Methods names.
+        /// </summary>
         public static List<string> Methods = new List<string>()
         {
             "Print",
             "FileStreamWriter",
             "ArrayAss"
         };
+        /// <summary>
+        /// Return method name.
+        /// </summary>
         public static List<string> MethodReturn = new List<string>()
         {
             "Plus",
@@ -465,8 +510,17 @@ namespace FeiTypeCodeBatch_FTCB_
             "Lss",
             "ArrayVal"
         };
+        /// <summary>
+        /// Custom method name and code.
+        /// </summary>
         public static Dictionary<string, string> c = new Dictionary<string, string>();
+        /// <summary>
+        /// Custom method name.
+        /// </summary>
         public static List<string> cn = new List<string>();
+        /// <summary>
+        /// Custom varname.
+        /// </summary>
         public static List<string> vn = new List<string>();
     }
 }

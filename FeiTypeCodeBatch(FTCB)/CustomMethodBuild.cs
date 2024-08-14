@@ -61,7 +61,9 @@ namespace FeiTypeCodeBatch_FTCB_
         public void RunMethod(string cn)
         {
             string item1 = V.c[cn];
+            //Method split char is ':'
             string[] itemArr = item1.Split(':');
+            //Change it to Form1.Run
             new Form1().Run(itemArr);
         }
     }
