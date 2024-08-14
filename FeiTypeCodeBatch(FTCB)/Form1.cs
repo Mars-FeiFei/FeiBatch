@@ -1,14 +1,104 @@
-﻿using System;
+﻿#region FeiBatchCode
+#region ProgarmGithubWebsite
+//Github:https://github.com/Mars-FeiFei/FeiBatch/tree/main/FeiTypeCodeBatch(FTCB)
+//User github:https://github.com/Mars-FeiFei
+#endregion
+#region Using
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Using;
 using Array = System.Array;
+#endregion
 namespace FeiTypeCodeBatch_FTCB_
 {
+    public class DataAttribute : Attribute
+    {
+        public DataAttribute()
+        {
+        }
+    }
+    [Data]
+    public class Data<T> : IEnumerable<T>
+    {
+        public List<T> data = new List<T>();
+        public Data(IEnumerable<T> data)
+        {
+            this.data = new List<T>(data);
+        }
+        public Data()
+        {
+        }
+        public void Add(T item)
+        {
+            data.Add(item);
+        }
+        public void Remove(T item)
+        {
+            _ = data.Remove(item);
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return (IEnumerator<T>)from item in data
+                                   select item;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator<T>)from item in data
+                                   select item;
+        }
+    }
+    public class GithubInproductionable : Attribute
+    {
+        public string GithubWebsite { get; set; }
+        public GithubInproductionable(string githubWebsite)
+        {
+            GithubWebsite = githubWebsite;
+        }
+        public string GetGithubUser()
+        {
+            return GithubWebsite.Split('/')[0] + GithubWebsite.Split('/')[1] + GithubWebsite.Split('/')[2];
+        }
+        public Data<string> GetUserData()
+        {
+            return new Data<string>() { GithubWebsite.Split('/')[2], GetHtml(GetGithubUser()).Result};
+        }
+        private async Task<string> GetHtml(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("https://www.example.com");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string html = await response.Content.ReadAsStringAsync();
+                        return html;
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+            }
+        }
+    }
+    [Serializable]
+    [GithubInproductionable("https://github.com/Mars-FeiFei/FeiBatch/tree/main/FeiTypeCodeBatch(FTCB)")]
     public partial class Form1 : Form
     {
         private string varname;
@@ -264,7 +354,6 @@ namespace FeiTypeCodeBatch_FTCB_
                                 }
                             }
                         }
-
                     }
                     if (item.ToUpperInvariant().Contains("CMDSTART-"))
                     {
@@ -564,3 +653,4 @@ namespace FeiTypeCodeBatch_FTCB_
         public static List<string> vn = new List<string>();
     }
 }
+#endregion
