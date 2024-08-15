@@ -20,83 +20,6 @@ using Array = System.Array;
 #endregion
 namespace FeiTypeCodeBatch_FTCB_
 {
-    public class DataAttribute : Attribute
-    {
-        public DataAttribute()
-        {
-        }
-    }
-    [Data]
-    public class Data<T> : IEnumerable<T>
-    {
-        public List<T> data = new List<T>();
-        public Data(IEnumerable<T> data)
-        {
-            this.data = new List<T>(data);
-        }
-        public Data()
-        {
-        }
-        public void Add(T item)
-        {
-            data.Add(item);
-        }
-        public void Remove(T item)
-        {
-            _ = data.Remove(item);
-        }
-        public IEnumerator<T> GetEnumerator()
-        {
-            return (IEnumerator<T>)from item in data
-                                   select item;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (IEnumerator<T>)from item in data
-                                   select item;
-        }
-    }
-    public class GithubInproductionable : Attribute
-    {
-        public string GithubWebsite { get; set; }
-        public GithubInproductionable(string githubWebsite)
-        {
-            GithubWebsite = githubWebsite;
-        }
-        public string GetGithubUser()
-        {
-            return GithubWebsite.Split('/')[0] + GithubWebsite.Split('/')[1] + GithubWebsite.Split('/')[2];
-        }
-        public Data<string> GetUserData()
-        {
-            return new Data<string>() { GithubWebsite.Split('/')[2], GetHtml(GetGithubUser()).Result};
-        }
-        private async Task<string> GetHtml(string url)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync("https://www.example.com");
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string html = await response.Content.ReadAsStringAsync();
-                        return html;
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
-                catch (Exception)
-                {
-                    return "";
-                }
-            }
-        }
-    }
     [Serializable]
     [GithubInproductionable("https://github.com/Mars-FeiFei/FeiBatch/tree/main/FeiTypeCodeBatch(FTCB)")]
     public partial class Form1 : Form
@@ -106,7 +29,7 @@ namespace FeiTypeCodeBatch_FTCB_
         {
             InitializeComponent();
         }
-        
+
         void PS(string command)
         {
             Process process = new Process();
@@ -154,6 +77,18 @@ namespace FeiTypeCodeBatch_FTCB_
                     if (item.ToLower() == "helper")
                     {
                         MessageBox.Show("Fei Batch Use:1.TypeName(varName)=value \r\n 2.Method ;arg1;arg2...... \r\n 3.TypeName(varName)=ReturnMethod ;arg1;arg2...... \r\n 4.if((bool)varName){CustomMethodName} \r\n 5.cmd/ps/fbpmStart-path(start the cmd/ps/fbpm file at the path.) \r\n 6.for-i=Int32 value;i<Int32 value:codes (for set i = Int32 value;i++;i<Int32 value)");
+                    }
+                    if (item.ToLower().Contains("show"))
+                    {
+                        if(item.Split(' ')[1] == "github"){
+                            MessageBox.Show("github:https://github.com/Mars-FeiFei/FeiBatch/tree/main/FeiTypeCodeBatch(FTCB)  It's copyed your clipboard.");
+                            Clipboard.SetText("https://github.com/Mars-FeiFei/FeiBatch/tree/main/FeiTypeCodeBatch(FTCB)");
+                        }
+                        else if (item.Split(' ')[1] == "user")
+                        {
+                            MessageBox.Show("github:https://github.com/Mars-FeiFei  It's copyed your clipboard.");
+                            Clipboard.SetText("https://github.com/Mars-FeiFei");
+                        }
                     }
                     if (item.Contains("for"))
                     {
@@ -304,7 +239,7 @@ namespace FeiTypeCodeBatch_FTCB_
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
             }
         }
@@ -422,7 +357,7 @@ namespace FeiTypeCodeBatch_FTCB_
                         Type type = Type.GetType($"Using.{itemStr.Split('(')[0]}", true, true);
                         object instance = Activator.CreateInstance(type);
                         var t = instance as BasicType;
-                        object vvv = new object(); 
+                        object vvv = new object();
                         if (itemStr.Split('=')[1] != "@input")
                         {
                             vvv = t.GetVar(itemStr.Split('=')[1]);
@@ -438,11 +373,11 @@ namespace FeiTypeCodeBatch_FTCB_
                         }
                         else
                         {
-                            textBox2.Text = varname+":";
+                            textBox2.Text = varname + ":";
                             textBox2.KeyDown += TextBox2_KeyDown;
-                            
+
                         }
-                        
+
                     }
                     if (!itemStr.Contains("method"))
                     {
@@ -481,10 +416,10 @@ namespace FeiTypeCodeBatch_FTCB_
         {
             if (e.KeyCode == Keys.Enter)
             {
-                AssVar(textBox2.Text,ref itemStr);
+                AssVar(textBox2.Text, ref itemStr);
             }
         }
-        void AssVar(string text,ref string itemStr)
+        void AssVar(string text, ref string itemStr)
         {
             itemStr = itemStr.Replace(itemStr.Split('=')[1], text.Split(':')[1]);
             AddVar(itemStr.Split('=')[1]);
@@ -566,10 +501,94 @@ namespace FeiTypeCodeBatch_FTCB_
                 }
             }
         }
-
-        
     }
 
+    public class DataAttribute : Attribute
+    {
+        public DataAttribute()
+        {
+        }
+    }
+    [Data]
+    public class Data<T> : IEnumerable<T>
+    {
+        public List<T> data = new List<T>();
+        public Data(IEnumerable<T> data)
+        {
+            this.data = new List<T>(data);
+        }
+        public Data()
+        {
+        }
+        public void Add(T item)
+        {
+            data.Add(item);
+        }
+        public void Remove(T item)
+        {
+            _ = data.Remove(item);
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return (IEnumerator<T>)from item in data
+                                   select item;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return (IEnumerator<T>)from item in data
+                                   select item;
+        }
+    }
+    public abstract class UserAttribute : Attribute
+    {
+        public string Data {  get; set; }
+        public UserAttribute()
+        {
+        }
+        public abstract Data<string> GetUserData();
+    }
+    public class GithubInproductionable : UserAttribute
+    {
+        public string GithubWebsite { get; set; }
+        public GithubInproductionable(string githubWebsite)
+        {
+            GithubWebsite = githubWebsite;
+        }
+        public string GetGithubUser()
+        {
+            return GithubWebsite.Split('/')[0] + GithubWebsite.Split('/')[1] + GithubWebsite.Split('/')[2];
+        }
+        public override Data<string> GetUserData()
+        {
+            return new Data<string>() { GithubWebsite.Split('/')[2], GetHtml(GetGithubUser()).Result};
+        }
+        private async Task<string> GetHtml(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("https://www.example.com");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string html = await response.Content.ReadAsStringAsync();
+                        return html;
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+            }
+        }
+    }
+    
     public static class U
     {
         /// <summary>

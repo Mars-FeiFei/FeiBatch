@@ -47,7 +47,7 @@ namespace FeiTypeCodeBatch_FTCB_
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.ForeColor = System.Drawing.SystemColors.Window;
             this.textBox1.Location = new System.Drawing.Point(-2, 91);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(1);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(549, 660);
@@ -70,7 +70,7 @@ namespace FeiTypeCodeBatch_FTCB_
             this.button2.BackColor = System.Drawing.SystemColors.InfoText;
             this.button2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button2.Location = new System.Drawing.Point(142, 26);
-            this.button2.Margin = new System.Windows.Forms.Padding(1);
+            this.button2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(104, 46);
             this.button2.TabIndex = 2;
@@ -83,7 +83,7 @@ namespace FeiTypeCodeBatch_FTCB_
             this.SaveFb.BackColor = System.Drawing.Color.Black;
             this.SaveFb.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.SaveFb.Location = new System.Drawing.Point(381, 24);
-            this.SaveFb.Margin = new System.Windows.Forms.Padding(1);
+            this.SaveFb.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.SaveFb.Name = "SaveFb";
             this.SaveFb.Size = new System.Drawing.Size(113, 48);
             this.SaveFb.TabIndex = 3;
@@ -96,7 +96,7 @@ namespace FeiTypeCodeBatch_FTCB_
             this.SaveCmd.BackColor = System.Drawing.SystemColors.InfoText;
             this.SaveCmd.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.SaveCmd.Location = new System.Drawing.Point(258, 26);
-            this.SaveCmd.Margin = new System.Windows.Forms.Padding(1);
+            this.SaveCmd.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.SaveCmd.Name = "SaveCmd";
             this.SaveCmd.Size = new System.Drawing.Size(101, 46);
             this.SaveCmd.TabIndex = 4;
@@ -117,6 +117,7 @@ namespace FeiTypeCodeBatch_FTCB_
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
@@ -135,8 +136,8 @@ namespace FeiTypeCodeBatch_FTCB_
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Yellow;
-            this.ClientSize = new System.Drawing.Size(879, 471);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(903, 479);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.SaveCmd);
@@ -145,7 +146,7 @@ namespace FeiTypeCodeBatch_FTCB_
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(1);
+            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.Name = "Form1";
             this.Text = "FeiBatch-Code Editer";
             this.ResumeLayout(false);
