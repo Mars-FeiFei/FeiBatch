@@ -9,3 +9,6 @@ D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\FeiTypeCodeBat
 D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\FeiTypeCodeBatch(FTCB).pdb
 D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\FeiTypeCodeBatch_FTCB_.TextShow.resources
 D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\FeiTypeCodeBatch_FTCB_.Form1.resources
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\bin\Debug\en-US\FeiTypeCodeBatch(FTCB).resources.dll
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\FeiTypeCodeBatch_FTCB_.Form1.en-US.resources
+D:\MyCode\FeiTypeCodeBatch(FTCB)\FeiTypeCodeBatch(FTCB)\obj\Debug\en-US\FeiTypeCodeBatch(FTCB).resources.dll

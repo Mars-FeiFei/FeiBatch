@@ -20,7 +20,6 @@ namespace Using
             }
             catch(Exception)
             {
-                Form1 f = new Form1();
                 return null;
             }
         }

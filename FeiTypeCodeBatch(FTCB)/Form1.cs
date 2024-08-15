@@ -122,7 +122,6 @@ namespace FeiTypeCodeBatch_FTCB_
                                 }
                             }
                         }
-
                     }
                     if (item.ToUpperInvariant().Contains("CMDSTART-"))
                     {
@@ -148,7 +147,7 @@ namespace FeiTypeCodeBatch_FTCB_
                     }
                     foreach (var func in V.MethodReturn)
                     {
-                        if (item.Contains(func))
+                        if (item.Contains(func) && !item.Contains("method"))
                         {
                             isTwo = true;
                             Type type = Type.GetType($"Using.{func}", true, true);
@@ -172,7 +171,7 @@ namespace FeiTypeCodeBatch_FTCB_
                             {
                                 V.v.Add(itemStr.Split('(')[1].Split(')')[0], obj);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 V.v[itemStr.Split('(')[1].Split(')')[0]] = obj;
                             }
@@ -235,6 +234,13 @@ namespace FeiTypeCodeBatch_FTCB_
                                 }
                                 t.Method(a);
                             }
+                        }
+                    }
+                    foreach(var i in V.cn)
+                    {
+                        if (itemStr.Contains(i) && !itemStr.Contains("method"))
+                        {
+                            cm.RunMethod(i);
                         }
                     }
                 }
@@ -404,7 +410,13 @@ namespace FeiTypeCodeBatch_FTCB_
                             }
                         }
                     }
-
+                    foreach (var i in V.cn)
+                    {
+                        if (itemStr.Contains(i) && !itemStr.Contains("method"))
+                        {
+                            cm.RunMethod(i);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
